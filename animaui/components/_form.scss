@@ -1,0 +1,161 @@
+@mixin line($border-color: black) {
+    border: none;
+    border-bottom: 2px solid $border-color;
+    padding-left: 8px;
+    &:focus {
+        outline: none;
+        &::placeholder {
+            opacity: 0; /* Firefox */
+        }    
+    }
+}
+
+input.line, select.line, textarea.line {
+    @include line;
+  }
+
+  @mixin box($border-color: black) {
+    border: 2px solid $border-color;
+    padding: 12px 12px;
+    box-sizing: border-box;
+    &:focus {
+        outline: none;
+        &::placeholder {
+            opacity: 0; /* Firefox */
+        }    
+    }
+}
+
+input.box, select.box, textarea.box {
+    @include box;
+  }
+
+  @mixin box-focus($bg-color: black) {
+    @include box;
+    &:focus {
+        background-color: $bg-color;
+    }
+  }
+
+  @mixin line-focus($bg-color: black) {
+    @include line;
+    &:focus {
+        background-color: $bg-color;
+    }
+  }
+
+  input.box-focus, select.box-focus, textarea.box-focus {
+    @include box-focus;
+  }
+
+  @each $key, $val in $colors {
+    .placeholder-#{$key} {
+        &::placeholder {
+            color: $val;
+            opacity: 1; /* Firefox */
+        }
+    }
+    .caret-#{$key} {
+        caret-color: $val;
+    }
+    input.line-#{$key}, select.line-#{$key}, textarea.line-#{$key} {
+        @include line(#{$val});
+    }
+    input.line-focus-#{$key}, select.line-focus-#{$key}, textarea.line-focus-#{$key} {
+        @include line-focus(#{$val});
+    }
+    input.line-#{$key}-focus, select.line-#{$key}-focus, textarea.line-#{$key}-focus {
+        @include line(#{$val});
+        &:focus {
+            background-color: #{$val};
+        }
+    }
+    input.box-#{$key}, select.box-#{$key}, textarea.box-#{$key} {
+        @include box(#{$val});
+    }
+    input.box-#{$key}-focus, select.box-#{$key}-focus, textarea.box-#{$key}-focus {
+        @include box(#{$val});
+        &:focus {
+            background-color: #{$val};
+        }
+    }
+    input.box-focus-#{$key}, select.box-focus-#{$key}, textarea.box-focus-#{$key} {
+        @include box-focus(#{$val});
+    }
+    @if ($val != black and $val != white) {
+        // light variations
+        @for $i from 1 through 9 {
+            input.line-#{$key}-l#{$i}, select.line-#{$key}-l#{$i}, textarea.line-#{$key}-l#{$i} {
+                @include line(mix(white, $val, $i * 10%));
+          }
+          input.box-#{$key}-l#{$i}, select.box-#{$key}-l#{$i}, textarea.box-#{$key}-l#{$i} {
+            @include box(mix(white, $val, $i * 10%));
+      }
+      input.box-#{$key}-l#{$i}-focus, select.box-#{$key}-l#{$i}-focus, textarea.box-#{$key}-l#{$i}-focus {
+        @include box(mix(white, $val, $i * 10%));
+        &:focus {
+            background-color: mix(white, $val, $i * 10%);
+        }
+    }
+      input.box-focus-#{$key}-l#{$i}, select.box-focus-#{$key}-l#{$i}, textarea.box-focus-#{$key}-l#{$i} {
+        @include box-focus(mix(white, $val, $i * 10%));
+    }
+    input.line-focus-#{$key}-l#{$i}, select.line-focus-#{$key}-l#{$i}, textarea.line-focus-#{$key}-l#{$i} {
+        @include line-focus(mix(white, $val, $i * 10%));
+    }
+    input.line-#{$key}-l#{$i}-focus, select.line-#{$key}-l#{$i}-focus, textarea.line-#{$key}-l#{$i}-focus {
+        @include line(mix(white, $val, $i * 10%));
+        &:focus {
+            background-color: mix(white, $val, $i * 10%);
+        }
+    }
+    .placeholder-#{$key}-l#{$i} {
+        &::placeholder {
+            color: mix(white, $val, $i * 10%);
+            opacity: 1; /* Firefox */
+        }
+    }
+    .caret-#{$key}-l#{$i} {
+        caret-color: mix(white, $val, $i * 10%);
+    }
+        }
+    
+        // dark variations
+        @for $i from 1 through 9 {
+            input.line-#{$key}-d#{$i}, select.line-#{$key}-d#{$i}, textarea.line-#{$key}-d#{$i} {
+                @include line(mix(black, $val, $i * 10%));
+            }
+            input.box-#{$key}-d#{$i}, select.box-#{$key}-d#{$i}, textarea.box-#{$key}-d#{$i} {
+                @include box(mix(black, $val, $i * 10%));
+            }
+            input.box-#{$key}-d#{$i}-focus, select.box-#{$key}-d#{$i}-focus, textarea.box-#{$key}-d#{$i}-focus {
+                @include box(mix(black, $val, $i * 10%));
+                &:focus {
+                    background-color: mix(black, $val, $i * 10%);
+                }
+            }
+      input.box-focus-#{$key}-d#{$i}, select.box-focus-#{$key}-d#{$i}, textarea.box-focus-#{$key}-d#{$i} {
+        @include box-focus(mix(black, $val, $i * 10%));
+  }
+  input.line-focus-#{$key}-d#{$i}, select.line-focus-#{$key}-d#{$i}, textarea.line-focus-#{$key}-d#{$i} {
+    @include line-focus(mix(black, $val, $i * 10%));
+}
+input.line-#{$key}-d#{$i}-focus, select.line-#{$key}-d#{$i}-focus, textarea.line-#{$key}-d#{$i}-focus {
+    @include line(mix(black, $val, $i * 10%));
+    &:focus {
+        background-color: mix(black, $val, $i * 10%);
+    }
+}
+    .placeholder-#{$key}-d#{$i} {
+        &::placeholder {
+            color: mix(black, $val, $i * 10%);
+            opacity: 1; /* Firefox */
+        }
+    }
+    .caret-#{$key}-d#{$i} {
+        caret-color: mix(black, $val, $i * 10%);
+    }
+
+        }
+      }
+  }

@@ -1,0 +1,95 @@
+// standard links
+@mixin link($color: $primary) {
+    color: $color;
+    text-decoration: none;
+    cursor: pointer;
+    &:hover {
+        color: lighten($color, 25%);
+      }
+  }
+
+  .link {
+    @include link;
+  }
+
+  // link-fill
+  @mixin link-fill($bgcolor: $primary) {
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+        box-sizing: border-box;
+        &::before {
+            content: '';
+            background-color: $bgcolor;
+            position: absolute;
+            left: 0;
+            bottom: 1px;
+            width: 100%;
+            height: 3px;
+            z-index: -1;
+            transition: all .3s ease-in-out; 
+        }
+        &:hover::before {
+            bottom: 0;
+            height: 100%;
+            border-radius: 3px;
+        }
+        &:hover {
+            color: black;
+        }
+  }
+
+  .link-fill {
+    @include link-fill;
+  }
+
+  // production
+  @each $key, $val in $colors {
+    .link-#{$key} {
+      @include link($val);
+      &:hover {
+        color: darken($val, 15%);
+      }
+    }
+
+      .link-fill-#{$key} {
+        @include link-fill($val);
+        &::before {
+            background-color: $val;
+        }
+      }
+
+    @if ($val != black and $val != white) {
+        // light variations
+        @for $i from 1 through 9 {
+          .link-#{$key}-l#{$i} {
+            color: mix(white, $val, $i * 10%);
+            &:hover {
+                color: darken($val, 15%);
+              }
+          }
+          .link-fill-#{$key}-l#{$i} {
+            @include link-fill($val);
+            &::before {
+              background-color: mix(white, $val, $i * 10%);
+          }
+          }
+        }
+    
+        // dark variations
+        @for $i from 1 through 9 {
+          .link-#{$key}-d#{$i} {
+            color: mix(black, $val, $i * 10%);
+            &:hover {
+                color: lighten($val, 15%);
+              }
+          }
+          .link-fill-#{$key}-d#{$i} {
+            @include link-fill($val);
+            &::before {
+              background-color: mix(black, $val, $i * 10%);
+          }
+          }
+      }
+    }
+    }

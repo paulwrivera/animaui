@@ -1,0 +1,187 @@
+@mixin btn($bg-color: #e2e2e2) {
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    border: 0;
+    padding: $base-padding $base-padding * 2;
+    border-radius: $border-radius-8;
+    background-color: $bg-color;
+    font-weight: 600;
+    box-shadow: $base-box-shadow;
+    box-sizing: border-box;
+  }
+  
+  .btn {
+    @include btn;
+  }
+  
+  @each $key, $val in $colors {
+    .btn-#{$key} {
+      @include btn($val);
+      &:hover {
+        background-color: lighten($val, 5);
+      }
+    }
+    .btn-wire-#{$key} {
+      @include btn();
+      box-sizing: border-box;
+      border: 2px solid $val;
+      background-color: transparent;
+      padding: calc($base-padding - 2px) $base-padding * 2;
+      &:hover {
+        background-color: $val;
+      }
+    }
+    .btn-dash-#{$key} {
+      @include btn(#fff);
+      border: 2px dashed $val;
+      padding: calc($base-padding - 2px) $base-padding * 2;
+      &:hover {
+        background-color: $val;
+      }
+    }
+    .btn-pill-#{$key} {
+      @include btn($val);
+      border-radius: 1.5rem;
+      &:hover {
+        background-color: lighten($val, 5);
+      }
+    }
+    .btn-pillwire-#{$key} {
+      @include btn(#fff);
+      border-radius: 1.5rem;
+      border: 2px solid $val;
+      padding: calc($base-padding - 2px) $base-padding * 2;
+      &:hover {
+        background-color: $val;
+      }
+    }
+    .btn-pilldash-#{$key} {
+      @include btn(#fff);
+      border-radius: 1.5rem;
+      border: 2px dashed $val;
+      padding: calc($base-padding - 2px) $base-padding * 2;
+      &:hover {
+        background-color: $val;
+      }
+    }
+    .btn-complement-#{$key} {
+      @include btn($val);
+      color: lcomp($val);
+      &:hover {
+        color: $val;
+        background-color: lcomp($val);
+      }
+    }
+    @if ($val != black and $val != white) {
+      // light variations
+      @for $i from 1 through 9 {
+        .btn-#{$key}-l#{$i} {
+          @include btn($val);
+          background-color:mix(white, $val, $i * 10%);
+      &:hover {
+        background-color: lighten($val, 5);
+      }
+        }
+        .btn-wire-#{$key}-l#{$i} {
+          @include btn(#fff);
+          box-sizing: border-box;
+          border: 2px solid mix(white, $val, $i * 10%);
+          padding: calc($base-padding - 2px) $base-padding * 2;
+          &:hover {
+            background-color: mix(white, $val, $i * 10%);
+          }     
+        }
+        .btn-dash-#{$key}-l#{$i} {
+          @include btn(#fff);
+          box-sizing: border-box;
+          border: 2px dashed mix(white, $val, $i * 10%);
+          padding: calc($base-padding - 2px) $base-padding * 2;
+          &:hover {
+            background-color: mix(white, $val, $i * 10%);
+          }     
+        }
+        .btn-pill-#{$key}-l#{$i} {
+          @include btn($val);
+          border-radius: 1.5rem;
+          background-color:mix(white, $val, $i * 10%);
+          &:hover {
+            background-color: lighten($val, 5);
+          }     
+        }
+        .btn-pillwire-#{$key}-l#{$i} {
+          @include btn(#fff);
+          border-radius: 1.5rem;
+          border: 2px solid mix(white, $val, $i * 10%);
+          padding: calc($base-padding - 2px) $base-padding * 2;
+          &:hover {
+            background-color: mix(white, $val, $i * 10%);
+          }     
+        }
+        .btn-pilldash-#{$key}-l#{$i} {
+          @include btn(#fff);
+          border-radius: 1.5rem;
+          border: 2px dashed mix(white, $val, $i * 10%);
+          padding: calc($base-padding - 2px) $base-padding * 2;
+          &:hover {
+            background-color: mix(white, $val, $i * 10%);
+          }     
+        }
+      }
+  
+      // dark variations
+      @for $i from 1 through 9 {
+        .btn-#{$key}-d#{$i} {
+          @include btn($val);
+          background-color:mix(black, $val, $i * 10%);
+      &:hover {
+        background-color: lighten($val, 5);
+      }
+        }
+        .btn-wire-#{$key}-d#{$i} {
+          @include btn(#fff);
+          box-sizing: border-box;
+          border: 2px solid mix(black, $val, $i * 10%);
+          padding: calc($base-padding - 2px) $base-padding * 2;
+          &:hover {
+            background-color: mix(black, $val, $i * 10%);
+          }     
+        }
+        .btn-dash-#{$key}-d#{$i} {
+          @include btn(#fff);
+          box-sizing: border-box;
+          border: 2px dashed mix(black, $val, $i * 10%);
+          padding: calc($base-padding - 2px) $base-padding * 2;
+          &:hover {
+            background-color: mix(black, $val, $i * 10%);
+          }     
+        }
+        .btn-pill-#{$key}-d#{$i} {
+          @include btn($val);
+          border-radius: 1.5rem;
+          background-color:mix(black, $val, $i * 10%);
+          &:hover {
+            background-color: lighten($val, 5);
+          }     
+        }
+        .btn-pillwire-#{$key}-d#{$i} {
+          @include btn(#fff);
+          border-radius: 1.5rem;
+          border: 2px solid mix(black, $val, $i * 10%);
+          padding: calc($base-padding - 2px) $base-padding * 2;
+          &:hover {
+            background-color: mix(black, $val, $i * 10%);
+          }     
+        }
+        .btn-pilldash-#{$key}-d#{$i} {
+          @include btn(#fff);
+          border-radius: 1.5rem;
+          border: 2px dashed mix(black, $val, $i * 10%);
+          padding: calc($base-padding - 2px) $base-padding * 2;
+          &:hover {
+            background-color: mix(black, $val, $i * 10%);
+          }     
+        }
+    }
+  }
+  }

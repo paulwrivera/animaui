@@ -1,0 +1,29 @@
+@use 'sass:math';
+
+@mixin badge($bg-color: $info) {
+  border-radius: $base-border-radius * 4;
+  background-color: $bg-color;
+  padding: math.div($base-padding, 4) math.div($base-padding, 2);
+  font-size: $font-size-xs;
+  font-weight: normal;
+}
+
+.badge {
+  @include badge;
+}
+
+@each $key, $val in $colors {
+  .badge-#{$key}{
+    @include badge($val);
+  }
+  @for $i from 1 through 9 {
+    .badge-#{$key}-l#{$i} {
+      @include badge($val);
+      background-color: mix(white, $val, $i * 10%);
+    }
+    .badge-#{$key}-d#{$i} {
+      @include badge($val);
+      background-color: mix(black, $val, $i * 10%);
+    }
+  }
+}

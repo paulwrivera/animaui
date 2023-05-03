@@ -1,0 +1,221 @@
+@mixin progress-base($bg-color: #326dee) {
+    list-style-type: none;
+    counter-reset: steps;
+    padding: 0;
+    display: flex;
+    li {
+        display: inline-block;
+        text-align: center;
+        height: 36px;
+        width: 18%;
+        border-bottom-width: 4px;
+        border-bottom-style: solid;
+        counter-increment: steps;
+        &:before {
+            position: relative;
+            float: left;
+        }
+        &:last-child {
+            width: 0;
+        }
+    }
+    li.done:before {
+        content: counter(steps);
+        font-size: 1rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        bottom: -1rem;
+        border: none;
+        border-radius: 50%;
+        background-color: $bg-color;   
+    }
+    li.todo:before {
+        content: counter(steps);
+        font-size: 1rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        bottom: -1rem;
+        border: none;
+        border-radius: 50%;
+        background-color: #d4d4d4;
+    }
+    li.done {
+        border-bottom-color: $bg-color;
+    }
+    li.todo, li.current {
+        border-bottom-color: #d4d4d4;
+    }
+    li.current:before {
+        content: counter(steps);
+        font-weight: bold;
+        font-size: 1rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        line-height: 2.5rem;
+        bottom: -1rem;
+        border: none;
+        border-radius: 50%;
+        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 1px 3px 1px, 0px 0px 0px 4px $bg-color inset;
+        color: $bg-color;
+        background-color: white;
+    }
+}
+
+ol.progress {
+    @include progress-base;
+  }
+
+ol.progress-0 {
+    @include progress-base;
+    li.done:before, li.todo:before, li.current:before {
+        border-radius: 0%;
+    }
+}
+
+ol.progress-5 {
+    @include progress-base;
+    li.done:before, li.todo:before, li.current:before {
+        border-radius: 5px;
+    }
+}
+
+@mixin progress-check($bg-color: #326dee) {
+    @include progress-base($bg-color: #326dee);
+    li.done {
+        border-bottom-color: $bg-color;
+    }
+    li.done:before {
+        content: "\2713";
+        background-color: $bg-color;
+    }
+    li.todo:before {
+        content: " ";
+   }
+   li.current:before {
+    content: " ";
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px, 0px 0px 0px 4px $bg-color inset, 0px 0px 0px 8px white inset;
+    background-color: $bg-color;
+ }
+}
+
+ul.progress-check {
+    @include progress-check;
+}
+ul.progress-check-0 {
+    @include progress-check;
+    li.done:before, li.todo:before, li.current:before {
+        border-radius: 0%;
+    }
+}
+ul.progress-check-5 {
+    @include progress-check;
+    li.done:before, li.todo:before, li.current:before {
+        border-radius: 5px;
+    }
+}
+
+  @each $key, $val in $colors {
+    ol.progress-#{$key} {
+        @include progress-base(#{$val});
+    }
+    ol.progress-0-#{$key} {
+        @include progress-base(#{$val});
+        li.done:before, li.todo:before, li.current:before {
+            border-radius: 0%;
+        }
+    }
+    ol.progress-5-#{$key} {
+        @include progress-base(#{$val});
+        li.done:before, li.todo:before, li.current:before {
+            border-radius: 5px;
+        }
+    }
+    ul.progress-check-#{$key} {
+        @include progress-check(#{$val});
+    }
+    ul.progress-check-0-#{$key} {
+        @include progress-check(#{$val});
+        li.done:before, li.todo:before, li.current:before {
+            border-radius: 0%;
+        }
+    }
+    ul.progress-check-5-#{$key} {
+        @include progress-check(#{$val});
+        li.done:before, li.todo:before, li.current:before {
+            border-radius: 5px;
+        }
+    }
+
+    @if ($val != black and $val != white) {
+        // light variations
+        @for $i from 1 through 9 {
+          ol.progress-#{$key}-l#{$i} {
+          @include progress-base(mix(white, $val, $i * 10%));
+          }
+          ol.progress-0-#{$key}-l#{$i} {
+            @include progress-base(mix(white, $val, $i * 10%));
+            li.done:before, li.todo:before, li.current:before {
+                border-radius: 0%;
+            }
+        }
+        ol.progress-5-#{$key}-l#{$i} {
+            @include progress-base(mix(white, $val, $i * 10%));
+            li.done:before, li.todo:before, li.current:before {
+                border-radius: 5px;
+            }
+        }
+        ul.progress-check-#{$key}-l#{$i} {
+            @include progress-check(mix(white, $val, $i * 10%));
+            }
+            ul.progress-check-0-#{$key}-l#{$i} {
+              @include progress-check(mix(white, $val, $i * 10%));
+              li.done:before, li.todo:before, li.current:before {
+                  border-radius: 0%;
+              }
+          }
+          ul.progress-check-5-#{$key}-l#{$i} {
+              @include progress-check(mix(white, $val, $i * 10%));
+              li.done:before, li.todo:before, li.current:before {
+                  border-radius: 5px;
+              }
+          }
+        }
+    
+        // dark variations
+        @for $i from 1 through 9 {
+            ol.progress-#{$key}-d#{$i} {
+              @include progress-base(mix(black, $val, $i * 10%));
+          }
+          ol.progress-0-#{$key}-d#{$i} {
+            @include progress-base(mix(black, $val, $i * 10%));
+            li.done:before, li.todo:before, li.current:before {
+                border-radius: 0%;
+            }
+        }
+        ol.progress-5-#{$key}-d#{$i} {
+            @include progress-base(mix(black, $val, $i * 10%));
+            li.done:before, li.todo:before, li.current:before {
+                border-radius: 5px;
+            }
+        }
+        ul.progress-check-#{$key}-d#{$i} {
+            @include progress-check(mix(black, $val, $i * 10%));
+        }
+        ul.progress-check-0-#{$key}-d#{$i} {
+          @include progress-check(mix(black, $val, $i * 10%));
+          li.done:before, li.todo:before, li.current:before {
+              border-radius: 0%;
+          }
+      }
+      ul.progress-check-5-#{$key}-d#{$i} {
+          @include progress-check(mix(black, $val, $i * 10%));
+          li.done:before, li.todo:before, li.current:before {
+              border-radius: 5px;
+          }
+      }
+        }
+      }
+}

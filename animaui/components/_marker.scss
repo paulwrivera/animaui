@@ -1,0 +1,60 @@
+@each $key, $val in $colors {
+    .marker-#{$key} {
+        background: linear-gradient(
+            180deg, 
+            transparent 0%, 
+            transparent 55%,
+            $val 55%,
+            $val 100%
+          );
+        padding-bottom: 2px;
+        z-index: -1;
+    }
+    .highlight-#{$key} {
+        background: $val;
+        padding-left: 1px;
+        padding-right: 1px;
+    }
+  
+    @if ($val != black and $val != white) {
+      // light variations
+      @for $i from 1 through 9 {
+        .marker-#{$key}-l#{$i} {
+            background: linear-gradient(
+                180deg, 
+                transparent 0%, 
+                transparent 55%,
+                mix(white, $val, $i * 10%) 55%,
+                mix(white, $val, $i * 10%) 100%
+              );
+            padding-bottom: 2px;
+            z-index: -1;
+        }
+        .highlight-#{$key}-l#{$i} { 
+            background: mix(white, $val, $i * 10%);
+            padding-left: 1px;
+            padding-right: 1px;
+        }
+      }
+  
+      // dark variations
+      @for $i from 1 through 9 {
+        .marker-#{$key}-d#{$i} {
+            background: linear-gradient(
+                180deg, 
+                transparent 0%, 
+                transparent 55%,
+                mix(black, $val, $i * 10%) 55%,
+                mix(black, $val, $i * 10%) 100%
+              );
+            padding-bottom: 2px;
+            z-index: -1;
+        }
+        .highlight-#{$key}-d#{$i} { 
+            background: mix(black, $val, $i * 10%);
+            padding-left: 1px;
+            padding-right: 1px;
+        }
+      }
+    }
+  }

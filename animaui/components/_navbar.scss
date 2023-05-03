@@ -1,0 +1,49 @@
+// This file will be rewritten to follow the same structure as other files.
+// Many of the classes will be rewritten and restyled.
+
+%flex-layout {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.navbar {
+    @extend %flex-layout;
+    padding: $base-padding 0;
+
+    .site-title {
+        font-size: $font-size-lg
+    }
+    .container {
+        @extend %flex-layout;
+    }
+}
+
+.navbar-transparent {
+    @extend .navbar;
+    background-color: transparent;
+}
+
+.navbar-off-white {
+    @extend .navbar;
+    background-color: #fbfbfd;
+}
+
+@each $key, $val in $colors {
+    .navbar-#{$key} {
+        @extend .navbar;
+        background-color: $val;
+    }
+    @for $i from 1 through 9 {
+        .navbar-#{$key}-l#{$i} {
+            @extend .navbar;
+          background-color: mix(white, $val, $i * 10%);
+        }
+        .navbar-#{$key}-d#{$i} {
+            @extend .navbar;
+          background-color: mix(black, $val, $i * 10%);
+        }
+      }
+}

@@ -1,0 +1,279 @@
+//ul work
+
+// check-list
+@mixin check-list($color: black) {
+    list-style: none;
+    li:before {
+        color: $color;
+        content: '\2713\0020';
+      }
+}
+
+ul.check-list {
+    @include check-list;
+}
+
+@each $key, $val in $colors {
+    ul.check-list-#{$key} {
+        @include check-list;
+        li:before {
+            color: $val;
+          }
+    }
+  
+    @if ($val != black and $val != white) {
+      // light variations
+      @for $i from 1 through 9 {
+        ul.check-list-#{$key}-l#{$i} {
+        @include check-list;
+        li:before {
+            color: mix(white, $val, $i * 10%);
+          }
+        }
+      }
+  
+      // dark variations
+      @for $i from 1 through 9 {
+        ul.check-list-#{$key}-d#{$i} {
+            @include check-list;
+            li:before {
+                color: mix(black, $val, $i * 10%);
+              }
+        }
+      }
+    }
+  }
+
+
+// plus-list
+@mixin plus-list($color: black) {
+    list-style: none;
+    li:before {
+        color: $color;
+        content: '\002b\0020';
+      }
+}
+
+ul.plus-list {
+    @include plus-list;
+}
+
+@each $key, $val in $colors {
+    ul.plus-list-#{$key} {
+        @include plus-list;
+        li:before {
+            color: $val;
+          }
+    }
+    @if ($val != black and $val != white) {
+        // light variations
+        @for $i from 1 through 9 {
+          ul.plus-list-#{$key}-l#{$i} {
+          @include plus-list;
+          li:before {
+              color: mix(white, $val, $i * 10%);
+            }
+          }
+        }
+    
+        // dark variations
+        @for $i from 1 through 9 {
+          ul.plus-list-#{$key}-d#{$i} {
+              @include plus-list;
+              li:before {
+                  color: mix(black, $val, $i * 10%);
+                }
+          }
+        }
+      }
+    }
+
+// dash-list
+@mixin dash-list($color: black) {
+    list-style: none;
+    list-style-position: outside;
+    li:before {
+        color: $color;
+        content: '\002d\0020';
+      }
+}
+
+ul.dash-list {
+    @include dash-list;
+}
+
+@each $key, $val in $colors {
+    ul.dash-list-#{$key} {
+        @include dash-list;
+        li:before {
+            color: $val;
+          }
+    }
+    @if ($val != black and $val != white) {
+        // light variations
+        @for $i from 1 through 9 {
+          ul.dash-list-#{$key}-l#{$i} {
+          @include dash-list;
+          li:before {
+              color: mix(white, $val, $i * 10%);
+            }
+          }
+        }
+    
+        // dark variations
+        @for $i from 1 through 9 {
+          ul.dash-list-#{$key}-d#{$i} {
+              @include dash-list;
+              li:before {
+                  color: mix(black, $val, $i * 10%);
+                }
+          }
+        }
+      }
+    }
+
+//li work
+
+// circle list style
+@mixin circle($bg-color: black) {
+    list-style: none;
+    position: relative;
+    padding: 0 0 0 1rem;
+    &:before {
+        content: "";
+        border-radius: 50%;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 10px;
+        height: 10px;
+        background-color: $bg-color;
+      }
+  }
+
+li.circle {
+    @include circle;
+}
+
+@each $key, $val in $colors {
+    li.circle-#{$key} {
+        @include circle(#{$val});
+    }
+  
+    @if ($val != black and $val != white) {
+      // light variations
+      @for $i from 1 through 9 {
+        li.circle-#{$key}-l#{$i} {
+        @include circle(mix(white, $val, $i * 10%));
+        }
+      }
+  
+      // dark variations
+      @for $i from 1 through 9 {
+        li.circle-#{$key}-l#{$i} {
+            @include circle(mix(black, $val, $i * 10%));
+        }
+      }
+    }
+  }
+
+  // circle-check list style
+  @mixin circle-check($bg-color: black, $check-color: white) {
+    list-style: none;
+    position: relative;
+    padding: 0 0 0 1.25rem;
+    &:before {
+        content: ""; 
+        position: absolute; 
+        left: 0; 
+        top: 50%;
+        transform: translateY(-50%);
+        border: solid 8px $bg-color;
+        border-radius: 8px;
+      }
+    &:after {
+        content: ""; 
+        position: absolute; 
+        left: 5px;
+        top: 30%;
+        transform: translateY(-30%);
+        width: 3px;
+        height: 6px;
+        border: solid $check-color;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+    }
+  }
+
+  li.circle-check {
+    @include circle-check;
+  }
+
+  @each $key, $val in $colors {
+    li.circle-check-#{$key} {
+        @include circle-check;
+        &:before {
+            border: solid 8px $val;
+          }
+        &:after {
+            border: solid 8px white;
+            border-width: 0 2px 2px 0;
+        } 
+    }
+}
+
+// begin ol work
+
+@mixin circle-number($bg-color: $primary) {
+
+  list-style: none;
+  counter-reset: steps;
+  li {
+    counter-increment: steps;
+  }
+  li::before {
+    content: counter(steps);
+    font-size: 1rem;
+    margin-right: 0.25rem;
+    background: $bg-color;
+    color: white;
+    width: 1.2em;
+    height: 1.2em;
+    border-radius: 50%;
+    display: inline-grid;
+    place-items: center;
+    line-height: 0.5;
+  }
+}
+
+ol.circle-number {
+  @include circle-number;
+}
+
+@each $key, $val in $colors {
+  ol.circle-number-#{$key} {
+    @include circle-number($val);
+  }
+  @if ($val != black and $val != white) {
+    // light variations
+    @for $i from 1 through 9 {
+      ol.circle-number-#{$key}-l#{$i} {
+        @include circle-number($val);
+        li::before {
+        background: mix(white, $val, $i * 10%);
+      }
+      }
+    }
+
+    // dark variations
+    @for $i from 1 through 9 {
+      ol.circle-number-#{$key}-d#{$i} {
+        @include circle-number($val);
+        li::before {
+        background: mix(black, $val, $i * 10%);
+        }
+      }
+  }
+}
+}

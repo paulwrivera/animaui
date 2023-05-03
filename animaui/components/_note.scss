@@ -1,0 +1,45 @@
+@mixin note($bg-color: #F3F2F3) {
+    display: inline-block;
+    border-inline-start: darken($bg-color, 9) 6px solid;
+    background-color: $bg-color;
+    padding: $base-padding $base-padding;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .note {
+    @include note;
+  }
+
+  .note-simple {
+    @include note;
+    border-inline-start: 6px solid;
+    background-color: #F3F2F3;
+  }
+
+  .note-bold {
+    @include note;
+    border-inline-start: 24px solid #FFD230;
+    background-color: #F3F2F3;
+  }
+
+  @each $key, $val in $colors {
+    .note-#{$key} {
+      @include note($val);
+    }
+    @if ($val != black and $val != white) {
+      // light & variations
+      @for $i from 1 through 9 {
+        .note-#{$key}-l#{$i} {
+          @include note($val);
+          background-color: mix(white, $val, $i * 10%);
+        }
+        .note-#{$key}-d#{$i} {
+          @include note($val);
+          border-inline-start: lighten($val, ($i * 3)) 6px solid;
+          background-color: mix(black, $val, $i * 10%);
+        }
+      }
+  }
+}
+
